@@ -1,4 +1,4 @@
-module dockertest
+module github.com/serjbibox/dockertest
 
 go 1.18
 
