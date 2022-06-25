@@ -3,7 +3,7 @@ RUN mkdir -p go/src/dockertest
 WORKDIR /go/src/dockertest
 COPY ./ ./
 RUN go env -w GO111MODULE=auto 
-RUN GOARCH=amd64 GOOS=linux go install .
+RUN go install .
 
 FROM alpine:latest
 WORKDIR /
