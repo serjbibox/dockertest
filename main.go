@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,9 +8,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
+	"github.com/serjbibox/dockertest/apis"
 )
-
-var cnt int
 
 func main() {
 	r := chi.NewRouter()
@@ -20,7 +18,7 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.URLFormat)
 	r.Use(render.SetContentType(render.ContentTypeJSON))
-	r.Get("/hello", Hello)
+	r.Get("/hello", apis.Hello)
 	httpPort := ":"
 	if env, ok := os.LookupEnv("PORT"); !ok {
 		httpPort += "8080"
@@ -28,11 +26,4 @@ func main() {
 		httpPort += env
 	}
 	log.Panic(http.ListenAndServe(httpPort, r))
-}
-
-func Hello(w http.ResponseWriter, r *http.Request) {
-	cnt++
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Hello, guy! You are %d", cnt)
 }
